@@ -381,25 +381,25 @@ function buildServer(origin: string): McpServer {
   });
 
   // ══════════════════════════════════════════════════════════════════════════
-  // RESOURCE — ui://jewellery-stylist/cards.html
+  // RESOURCE — ui://widget/jewellery-cards.html
   // ChatGPT fetches this when _meta.ui.resourceUri is set in the tool result.
   // MIME type must be text/html;profile=mcp-app for ChatGPT to render it.
   // Requires: ChatGPT Developer Mode (Settings → Apps & Connectors → Advanced)
   // ══════════════════════════════════════════════════════════════════════════
   server.registerResource(
     "jewellery-cards-widget",
-    "ui://jewellery-stylist/cards.html",
+    "ui://widget/jewellery-cards.html",
     {
       // ResourceMetadata = Omit<Resource, 'uri' | 'name'> — name is excluded
       description: "Interactive jewellery recommendation cards widget with product images",
       mimeType: "text/html+skybridge",
     },
     async () => {
-      console.log("[RESOURCE] Serving widget: ui://jewellery-stylist/cards.html");
+      console.log("[RESOURCE] Serving widget: ui://widget/jewellery-cards.html");
       return {
         contents: [
           {
-            uri: "ui://jewellery-stylist/cards.html",
+            uri: "ui://widget/jewellery-cards.html",
             mimeType: "text/html+skybridge",
             text: WIDGET_HTML,
           },
@@ -441,9 +441,9 @@ function buildServer(origin: string): McpServer {
       },
       _meta: {
         ui: {
-          resourceUri: "ui://jewellery-stylist/cards.html",
+          resourceUri: "ui://widget/jewellery-cards.html",
         },
-        "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
+        "openai/outputTemplate": "ui://widget/jewellery-cards.html",
       },
     },
     async (args) => {
@@ -504,9 +504,9 @@ function buildServer(origin: string): McpServer {
         structuredContent,
         _meta: {
           ui: {
-            resourceUri: "ui://jewellery-stylist/cards.html",
+            resourceUri: "ui://widget/jewellery-cards.html",
           },
-          "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
+          "openai/outputTemplate": "ui://widget/jewellery-cards.html",
         },
       } as any;
     }

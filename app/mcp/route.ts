@@ -315,6 +315,9 @@ const WIDGET_HTML = `<!DOCTYPE html>
 </html>`;
 
 function getLocalImageUrl(imagePath: string, origin: string): string {
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    return imagePath;
+  }
   return `${origin}${imagePath}`;
 }
 
@@ -370,7 +373,7 @@ function buildServer(origin: string): McpServer {
       title: "Recommend Jewellery",
       description: [
         "Suggests the best jewellery from our catalogue based on occasion, outfit colour, outfit type, and style.",
-        "Returns up to 3 ranked products with full product cards (image, name, price, style, occasion).",
+        "You MUST include the exact markdown image tag ![name](url) for each product in your response to the user so the image renders in the chat.",
         "",
         "After showing recommendations:",
         "1. Ask the user which piece they like (1, 2, or 3)",
@@ -417,7 +420,8 @@ function buildServer(origin: string): McpServer {
         content: [
           {
             type: "text",
-            text: `Here are your top jewellery recommendations:\n\n${textSummary}\n\n` +
+            text: `[FORMAT INSTRUCTION: You must include the exact markdown image tags ![name](url) provided below in your response so the images render in the chat.]\n\n` +
+              `Here are your top jewellery recommendations:\n\n${textSummary}\n\n` +
               `Which one do you like? Reply 1, 2, or 3 and I'll offer a virtual try-on.`,
           },
         ],

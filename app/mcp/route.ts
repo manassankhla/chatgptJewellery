@@ -380,12 +380,6 @@ function buildServer(): McpServer {
         outfitType: z.string().optional().describe("e.g. 'saree', 'lehenga', 'gown', 'western_dress'"),
         style: z.string().optional().describe("e.g. 'bridal', 'royal', 'modern', 'elegant', 'luxury'"),
       },
-      _meta: {
-        ui: {
-          resourceUri: "ui://jewellery-stylist/cards.html",
-        },
-        "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
-      },
     },
     async (args) => {
       console.log("[TOOL] recommend_jewellery args:", JSON.stringify(args));
@@ -402,29 +396,6 @@ function buildServer(): McpServer {
         };
       }
 
-      // ── structuredContent ───────────────────────────────────────────────
-      // This is the data payload the widget reads via window.openai.toolOutput
-      // Shape must match exactly what the widget JavaScript expects
-      const structuredContent = {
-        products: results.map((p) => ({
-          id: p.id,
-          name: p.name,
-          price: p.price,
-          image: p.image,           // Cloudinary URL — widget <img src> uses this directly
-          styleTags: p.aiTags.styleTags,
-          occasionTags: p.aiTags.occasionTags,
-          bestOutfitColours: p.aiTags.bestOutfitColours,
-          bestOutfitTypes: p.aiTags.bestOutfitTypes,
-          lookIntensity: p.aiTags.lookIntensity,
-          score: p.score,
-        })),
-        occasion: args.occasion,
-        outfitColor: args.outfitColor,
-        outfitType: args.outfitType,
-      };
-
-      // ── Text content ────────────────────────────────────────────────────
-      // Always returned — this is what the LLM and plain connector users see
       const textSummary = results
         .map((p, i) =>
           `${i + 1}. **${p.name}** — ₹${p.price.toLocaleString("en-IN")} (${p.score}/100 match)\n` +
@@ -432,9 +403,6 @@ function buildServer(): McpServer {
           `   ![${p.name}](${p.image})`
         )
         .join("\n\n");
-
-      console.log("[TOOL] structuredContent products:", structuredContent.products.length);
-      console.log("[TOOL] _meta.ui.resourceUri → ui://jewellery-stylist/cards.html");
 
       return {
         content: [
@@ -444,19 +412,6 @@ function buildServer(): McpServer {
               `Which one do you like? Reply 1, 2, or 3 and I'll offer a virtual try-on.`,
           },
         ],
-
-        // ── Widget data payload ──────────────────────────────────────────
-        structuredContent,
-
-        // ── Apps SDK widget routing ──────────────────────────────────────
-        // Tells ChatGPT (in Developer Mode) to fetch and render the widget
-        // at ui://jewellery-stylist/cards.html via resources/read
-        _meta: {
-          ui: {
-            resourceUri: "ui://jewellery-stylist/cards.html",
-          },
-          "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
-        },
       } as any;
     }
   );
@@ -470,12 +425,6 @@ function buildServer(): McpServer {
       title: "Test Image Rendering",
       description: "Diagnostic tool. Tests whether ChatGPT renders the widget UI. Call this to verify Developer Mode is active.",
       inputSchema: {},
-      _meta: {
-        ui: {
-          resourceUri: "ui://jewellery-stylist/cards.html",
-        },
-        "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
-      },
     },
     async () => {
       const testProduct = {
@@ -494,13 +443,8 @@ function buildServer(): McpServer {
       return {
         content: [{
           type: "text",
-          text: "Test widget called. If you see a jewellery card with an image below, Developer Mode is working correctly.\n\nProduct: Royal Temple Bridal Choker Set | ₹85,000",
+          text: "Test called. Standard image markdown: ![Test Choker](https://res.cloudinary.com/dnjouplkz/image/upload/v1782217413/three_gcdcw2.png)",
         }],
-        structuredContent: { products: [testProduct] },
-        _meta: {
-          ui: { resourceUri: "ui://jewellery-stylist/cards.html" },
-          "openai/outputTemplate": "ui://jewellery-stylist/cards.html",
-        },
       } as any;
     }
   );

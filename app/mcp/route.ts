@@ -429,7 +429,7 @@ function buildServer(): McpServer {
         .map((p, i) =>
           `${i + 1}. **${p.name}** — ₹${p.price.toLocaleString("en-IN")} (${p.score}/100 match)\n` +
           `   Style: ${p.aiTags.styleTags.join(", ")} | Intensity: ${p.aiTags.lookIntensity}\n` +
-          `   Image: ${p.image}`
+          `   ![${p.name}](${p.image})`
         )
         .join("\n\n");
 

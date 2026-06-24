@@ -89,13 +89,3 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  return Response.json({
-    status: "ok",
-    message: "Jewellery MCP Running",
-    tools: [
-      "search_jewellery",
-      "get_product"
-    ]
-  });
-}

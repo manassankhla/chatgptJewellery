@@ -505,6 +505,74 @@ function buildServer(): McpServer {
     }
   );
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // TOOL — virtual_try_on
+  // Provides a dedicated endpoint for virtual try-on prompts.
+  // ══════════════════════════════════════════════════════════════════════════
+  server.registerTool(
+    "virtual_try_on",
+    {
+      title: "Virtual Try-On",
+      description: "Applies selected jewellery onto the user's uploaded portrait photograph using precise high-end rendering instructions.",
+      inputSchema: {
+        jewelleryName: z.string().describe("Name of the selected jewellery item"),
+        jewelleryImageUrl: z.string().describe("URL of the jewellery image reference"),
+        userPhotoUrl: z.string().describe("URL of the user's uploaded portrait photograph (acting as identity reference)"),
+      },
+    },
+    async (args) => {
+      console.log("[TOOL] virtual_try_on called with:", JSON.stringify(args));
+      
+      const tryOnPrompt = [
+        "TASK: High-end luxury jewellery virtual try-on.",
+        "",
+        `REFERENCE 1: ${args.userPhotoUrl}`,
+        "Use the uploaded portrait photo as the identity reference.",
+        "Preserve the person's face, skin tone, hairstyle, facial features, expression, and pose exactly.",
+        "",
+        `REFERENCE 2: ${args.jewelleryImageUrl} (${args.jewelleryName})`,
+        "Use the uploaded jewellery image as the jewellery reference.",
+        "Recreate the exact same necklace and matching earrings design, including gemstone arrangement, metal color, shape, proportions, diamond placement, and overall craftsmanship.",
+        "",
+        "INSTRUCTIONS:",
+        "- Place the necklace naturally around the neck following the exact neck curvature.",
+        "- Place matching earrings accurately on both ears.",
+        "- Maintain correct scale and proportions.",
+        "- Match lighting, reflections, shadows, and highlights to the portrait photograph.",
+        "- Jewellery should appear physically worn, not pasted or overlaid.",
+        "- Preserve skin texture and hair strands around the jewellery.",
+        "- Create realistic contact shadows beneath the necklace.",
+        "- Ensure the jewellery blends naturally with the body and perspective.",
+        "- Keep the face identity unchanged.",
+        "- Do not modify facial features.",
+        "- Do not change expression.",
+        "- Do not change hairstyle.",
+        "- Do not change camera angle.",
+        "- Do not change background.",
+        "",
+        "STYLE:",
+        "Premium luxury jewellery advertisement photography. Ultra realistic. Photorealistic. Studio quality. Natural skin texture. High detail. 8K quality.",
+        "",
+        "NEGATIVE PROMPT:",
+        "cartoon, CGI look, fake jewellery, floating necklace, distorted earrings, extra jewellery, altered face, beauty filter, plastic skin, unrealistic reflections, duplicate earrings, warped neck, cropped jewellery, low quality, blurry, overprocessed, pasted object, collage effect.",
+        "",
+        "OUTPUT:",
+        "A single photorealistic virtual try-on image showing the person naturally wearing the exact jewellery set from the reference image."
+      ].join("\n");
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Starting virtual try-on rendering process for "${args.jewelleryName}" using the provided reference photo.\n\n` +
+                  `Generation Prompt and Instructions for DALL-E/Image Tool:\n\n\`\`\`\n${tryOnPrompt}\n\`\`\`\n\n` +
+                  `Please run DALL-E using these instructions and provide the final image output.`
+          }
+        ]
+      } as any;
+    }
+  );
+
   return server;
 }
 

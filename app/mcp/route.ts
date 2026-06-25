@@ -150,89 +150,71 @@ function getWidgetHtml(origin: string, initData?: WidgetData | null) {
     font-size: 13px;
   }
 
-  /* ── TABLE ────────────────────────────────────────────────────────────── */
-  .table-wrapper {
-    width: 100%;
+  /* ── CAROUSEL ──────────────────────────────────────────────────────────── */
+  .carousel-wrapper {
+    display: flex;
     overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .carousel-wrapper::-webkit-scrollbar { display: none; }
+  .carousel-item {
+    flex: 0 0 240px;
+    background: #ffffff;
     border-radius: 16px;
     border: 1px solid #f0ece8;
-    margin-bottom: 20px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    position: relative;
   }
   @media (prefers-color-scheme: dark) {
-    .table-wrapper { border-color: #2d2d30; box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+    .carousel-item { background: #1c1c1f; border-color: #2d2d30; box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
   }
-  table {
+  .carousel-img-container {
     width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    font-size: 13px;
+    height: 240px;
+    position: relative;
+    border-bottom: 1px solid #f0ece8;
   }
   @media (prefers-color-scheme: dark) {
-    table { background: #1c1c1f; }
+    .carousel-img-container { border-color: #2d2d30; }
   }
-  thead tr {
-    background: linear-gradient(135deg, #803340 0%, #a0455a 100%);
-  }
-  thead th {
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 12px 16px;
-    text-align: left;
-    white-space: nowrap;
-  }
-  tbody tr {
-    border-bottom: 1px solid #f4f4f5;
-    transition: background 0.15s;
-  }
-  @media (prefers-color-scheme: dark) {
-    tbody tr { border-bottom-color: #27272a; }
-  }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: #fdf8f6; }
-  @media (prefers-color-scheme: dark) {
-    tbody tr:hover { background: #242427; }
-  }
-  tbody td {
-    padding: 14px 16px;
-    vertical-align: middle;
-  }
-  .td-img { width: 80px; min-width: 80px; }
-  .td-img img {
-    width: 72px;
-    height: 72px;
+  .carousel-img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #f0ece8;
     display: block;
   }
-  @media (prefers-color-scheme: dark) {
-    .td-img img { border-color: #2d2d30; }
+  .carousel-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
   }
-  .td-name { min-width: 160px; }
-  .row-name {
-    font-size: 13px;
+  .carousel-title {
+    font-size: 14px;
     font-weight: 700;
     color: #18181b;
     line-height: 1.3;
-    margin-bottom: 4px;
   }
   @media (prefers-color-scheme: dark) {
-    .row-name { color: #f4f4f5; }
+    .carousel-title { color: #f4f4f5; }
   }
-  .row-tags {
+  .carousel-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 4px;
   }
   .tag {
     font-size: 9px;
     font-weight: 600;
-    padding: 2px 7px;
+    padding: 3px 8px;
     border-radius: 99px;
     background: #f5ede6;
     color: #803340;
@@ -244,29 +226,38 @@ function getWidgetHtml(origin: string, initData?: WidgetData | null) {
   }
   .tag.intensity-heavy { background: #803340; color: #fff; }
   .tag.intensity-medium { background: #d97706; color: #fff; }
-  .td-price {
-    white-space: nowrap;
-    font-size: 14px;
+  .carousel-occasions {
+    font-size: 11px;
+    color: #71717a;
+    line-height: 1.4;
+  }
+  .carousel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .carousel-price {
+    font-size: 16px;
     font-weight: 800;
     color: #18181b;
   }
   @media (prefers-color-scheme: dark) {
-    .td-price { color: #f4f4f5; }
+    .carousel-price { color: #f4f4f5; }
   }
-  .td-score { text-align: center; min-width: 60px; }
-  .score-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 800;
+  .score-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
     background: linear-gradient(135deg, #803340 0%, #a0455a 100%);
     color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 99px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
-  .td-action { min-width: 110px; white-space: nowrap; }
   .btn-buy-now {
     display: inline-flex;
     align-items: center;
@@ -298,16 +289,23 @@ function getWidgetHtml(origin: string, initData?: WidgetData | null) {
     stroke-width: 2.5;
   }
   .rec-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    padding: 2px 8px;
+    padding: 4px 10px;
     border-radius: 99px;
-    background: #803340;
-    color: #ffffff;
-    margin-bottom: 5px;
+    background: #ffffff;
+    color: #803340;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+  @media (prefers-color-scheme: dark) {
+    .rec-badge { background: #1c1c1f; color: #e07080; }
   }
   /* ── RECOMMENDATION BOX ───────────────────────────────────────────────── */
   .recommend-box {
@@ -390,18 +388,7 @@ function getWidgetHtml(origin: string, initData?: WidgetData | null) {
     }
 
     var html = [
-      '<div class="table-wrapper">',
-        '<table>',
-          '<thead><tr>',
-            '<th style="width:24px">#</th>',
-            '<th style="width:88px"></th>',
-            '<th>Product</th>',
-            '<th>Occasions</th>',
-            '<th>Price</th>',
-            '<th style="text-align:center">Match</th>',
-            '<th></th>',
-          '</tr></thead>',
-          '<tbody>',
+      '<div class="carousel-wrapper">'
     ].join('');
 
     products.forEach(function(p, idx) {
@@ -412,37 +399,34 @@ function getWidgetHtml(origin: string, initData?: WidgetData | null) {
       var link = p.link || '#';
 
       html += [
-        '<tr>',
-          '<td style="width:24px;text-align:center;font-size:11px;font-weight:700;color:#803340">' + (idx + 1) + '</td>',
-          '<td class="td-img">',
-            p.image ? '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy" crossorigin="anonymous">' : '',
-          '</td>',
-          '<td class="td-name">',
+        '<div class="carousel-item">',
+          '<div class="carousel-img-container">',
             isRec ? '<div class="rec-badge">★ Best Match</div>' : '',
-            '<div class="row-name">' + p.name + '</div>',
-            '<div class="row-tags">',
+            '<div class="score-badge">' + (p.score || '-') + ' Match</div>',
+            p.image ? '<img class="carousel-img" src="' + p.image + '" alt="' + p.name + '" loading="lazy" crossorigin="anonymous">' : '',
+          '</div>',
+          '<div class="carousel-content">',
+            '<div class="carousel-title">' + p.name + '</div>',
+            '<div class="carousel-tags">',
               tags.map(function(t) { return '<span class="tag">' + t + '</span>'; }).join(''),
               '<span class="tag intensity-' + intensity + '">' + intensity + '</span>',
             '</div>',
-          '</td>',
-          '<td>',
-            '<div style="font-size:11px;color:#71717a;line-height:1.6;">',
-              occasions.join('<br>'),
+            '<div class="carousel-occasions">',
+              occasions.join(' • '),
             '</div>',
-          '</td>',
-          '<td class="td-price">₹' + (p.price || 0).toLocaleString('en-IN') + '</td>',
-          '<td class="td-score"><div class="score-pill">' + (p.score || '-') + '</div></td>',
-          '<td class="td-action">',
-            '<a class="btn-buy-now" href="' + link + '" target="_blank" rel="noopener noreferrer">',
-              '<svg viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
-              'Buy Now',
-            '</a>',
-          '</td>',
-        '</tr>',
+            '<div class="carousel-footer">',
+              '<div class="carousel-price">₹' + (p.price || 0).toLocaleString('en-IN') + '</div>',
+              '<a class="btn-buy-now" href="' + link + '" target="_blank" rel="noopener noreferrer">',
+                '<svg viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+                'Buy',
+              '</a>',
+            '</div>',
+          '</div>',
+        '</div>'
       ].join('');
     });
 
-    html += '</tbody></table></div>';
+    html += '</div>';
 
     // Bottom recommendation box
     var recP = products[recIdx];

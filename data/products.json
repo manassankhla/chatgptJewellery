@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Royal Temple Bridal Choker Set",
     "price": 85000,
-    "image": "/three.png",
+    "image": "/one.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-31544616/",
     "aiTags": {
       "category": "necklace_set",
@@ -19,7 +19,7 @@
     "id": "2",
     "name": "Diamond Emerald Pendant Set",
     "price": 65000,
-    "image": "/one.png",
+    "image": "/two.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-34847462/",
     "aiTags": {
       "category": "necklace_set",
@@ -35,7 +35,7 @@
     "id": "3",
     "name": "Antique Lakshmi Bridal Choker",
     "price": 95000,
-    "image": "/two.png",
+    "image": "/three.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-86999874/",
     "aiTags": {
       "category": "necklace_set",
@@ -51,7 +51,7 @@
     "id": "4",
     "name": "Rose Gold Diamond Reception Set",
     "price": 70000,
-    "image": "/six.png",
+    "image": "/four.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-12436615/",
     "aiTags": {
       "category": "necklace_set",
@@ -67,7 +67,7 @@
     "id": "5",
     "name": "Diamond Reception Necklace Set",
     "price": 120000,
-    "image": "/four.png",
+    "image": "/five.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-12436615/",
     "aiTags": {
       "category": "necklace_set",
@@ -83,7 +83,7 @@
     "id": "6",
     "name": "Emerald Diamond Luxury Set",
     "price": 135000,
-    "image": "/five.png",
+    "image": "/six.png",
     "link": "https://puregoldjeweller.com/product/polki-set-pg-74297137/",
     "aiTags": {
       "category": "necklace_set",

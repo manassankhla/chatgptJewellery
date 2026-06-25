@@ -569,14 +569,14 @@ function buildServer(origin: string): McpServer {
   });
 
   // ══════════════════════════════════════════════════════════════════════════
-  // RESOURCE — ui://widget/jewellery-cards.html
+  // RESOURCE — ui://widget/jewellery-cards-v2.html
   // ChatGPT fetches this when _meta.ui.resourceUri is set in the tool result.
   // MIME type must be text/html;profile=mcp-app for ChatGPT to render it.
   // Requires: ChatGPT Developer Mode (Settings → Apps & Connectors → Advanced)
   // ══════════════════════════════════════════════════════════════════════════
   server.registerResource(
     "jewellery-cards-widget",
-    "ui://widget/jewellery-cards.html",
+    "ui://widget/jewellery-cards-v2.html",
     {
       // ResourceMetadata = Omit<Resource, 'uri' | 'name'> — name is excluded
       description: "Interactive jewellery recommendation cards widget with product images",
@@ -589,7 +589,7 @@ function buildServer(origin: string): McpServer {
       return {
         contents: [
           {
-            uri: "ui://widget/jewellery-cards.html",
+            uri: "ui://widget/jewellery-cards-v2.html",
             mimeType: "text/html;profile=mcp-app",
             text: getWidgetHtml(origin, initData),
           },
@@ -631,9 +631,9 @@ function buildServer(origin: string): McpServer {
       },
       _meta: {
         ui: {
-          resourceUri: "ui://widget/jewellery-cards.html",
+          resourceUri: "ui://widget/jewellery-cards-v2.html",
         },
-        "openai/outputTemplate": "ui://widget/jewellery-cards.html",
+        "openai/outputTemplate": "ui://widget/jewellery-cards-v2.html",
       },
     },
     async (args) => {
@@ -703,9 +703,9 @@ function buildServer(origin: string): McpServer {
         structuredContent,
         _meta: {
           ui: {
-            resourceUri: "ui://widget/jewellery-cards.html",
+            resourceUri: "ui://widget/jewellery-cards-v2.html",
           },
-          "openai/outputTemplate": "ui://widget/jewellery-cards.html",
+          "openai/outputTemplate": "ui://widget/jewellery-cards-v2.html",
         },
       } as any;
     }
@@ -817,7 +817,10 @@ function buildServer(origin: string): McpServer {
 
 // ── HTTP Handlers ─────────────────────────────────────────────────────────
 async function handleMcpRequest(req: Request): Promise<Response> {
-  const { origin } = new URL(req.url);
+  const proto = req.headers.get("x-forwarded-proto") || "https";
+  const host = req.headers.get("x-forwarded-host") || req.headers.get("host");
+  const origin = host ? `${proto}://${host}` : new URL(req.url).origin;
+  
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined, // stateless
     enableJsonResponse: true,

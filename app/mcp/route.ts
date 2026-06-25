@@ -81,286 +81,59 @@ const WIDGET_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jewellery Recommendations</title>
+<title>Jewellery Recommendations Bridge</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: linear-gradient(180deg, #07070a 0%, #0f0f18 100%);
-    color: #fff;
-    min-height: 100vh;
-    padding: 16px;
-    overflow-y: hidden;
-  }
-  h2 {
-    font-size: 13px;
-    font-weight: 600;
-    color: #dfb750; /* Luxury Gold */
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 16px;
-    padding: 4px 4px 16px 4px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-  /* Custom scrollbar for premium touch */
-  .grid::-webkit-scrollbar {
-    height: 3px;
-  }
-  .grid::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.03);
-  }
-  .grid::-webkit-scrollbar-thumb {
-    background: rgba(223, 183, 80, 0.4);
-    border-radius: 99px;
-  }
-  .grid::-webkit-scrollbar-thumb:hover {
-    background: rgba(223, 183, 80, 0.8);
-  }
-  .card {
-    flex: 0 0 210px;
-    scroll-snap-align: start;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(223, 183, 80, 0.15);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(223, 183, 80, 0.7);
-    box-shadow: 0 12px 30px rgba(223, 183, 80, 0.15);
-  }
-  .card img {
-    width: 100%;
-    aspect-ratio: 1.1;
-    object-fit: cover;
-    background: #11111a;
-    display: block;
-    border-bottom: 1px solid rgba(223, 183, 80, 0.1);
-  }
-  .card-body {
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-  }
-  .card-name {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #f7f5ff;
-    margin-bottom: 6px;
-    line-height: 1.35;
-    min-height: 36px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .card-price {
-    font-size: 14px;
-    font-weight: 700;
-    color: #dfb750;
-    margin-bottom: 8px;
-  }
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 10px;
-  }
-  .tag {
-    font-size: 9.5px;
-    font-weight: 500;
-    padding: 2.5px 7px;
-    border-radius: 999px;
-    background: rgba(223, 183, 80, 0.08);
-    border: 1px solid rgba(223, 183, 80, 0.2);
-    color: #f3e5ab;
-  }
-  .card-score {
-    font-size: 10px;
-    color: #8c8da0;
-    margin-bottom: 12px;
-  }
-  .btn-select {
-    width: 100%;
-    padding: 9px;
-    border-radius: 12px;
-    border: 1px solid rgba(223, 183, 80, 0.3);
-    background: linear-gradient(135deg, rgba(223, 183, 80, 0.1) 0%, rgba(223, 183, 80, 0.02) 100%);
-    color: #dfb750;
-    font-family: 'Outfit', sans-serif;
-    font-size: 11.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .btn-select:hover {
-    background: rgba(223, 183, 80, 0.95);
-    color: #0c0c14;
-    border-color: transparent;
-    box-shadow: 0 4px 12px rgba(223, 183, 80, 0.3);
-  }
-  .btn-select.selected {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-  }
-  .error {
-    color: #ef4444;
-    font-size: 13px;
-    text-align: center;
-    padding: 24px;
-    border: 1px dashed rgba(239, 68, 68, 0.3);
-    border-radius: 16px;
-    background: rgba(239, 68, 68, 0.05);
-  }
-  .loading {
-    color: #8c8da0;
-    font-size: 13px;
-    text-align: center;
-    padding: 32px;
-  }
+  body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+  iframe { border: none; width: 100%; height: 100%; }
 </style>
 </head>
 <body>
-<h2>✨ Jewellery Recommendations</h2>
-<div id="root"><div class="loading">Loading jewellery...</div></div>
-
+<iframe id="widget-frame" src=""></iframe>
 <script>
 (function() {
-  var root = document.getElementById('root');
+  const iframe = document.getElementById('widget-frame');
+  const origin = window.location.origin;
+  iframe.src = origin + '/widget/cards';
 
-  function formatPrice(p) {
-    return '₹' + p.toLocaleString('en-IN');
-  }
-
-  function renderCards(products) {
-    if (!products || products.length === 0) {
-      root.innerHTML = '<div class="error">No products found.</div>';
-      return;
-    }
-    var html = '<div class="grid">';
-    products.forEach(function(p, i) {
-      var tags = (p.styleTags || []).slice(0, 3).map(function(t) {
-        return '<span class="tag">' + t + '</span>';
-      }).join('');
-      var occasions = (p.occasionTags || []).slice(0, 2).join(', ');
-      html += [
-        '<div class="card" id="card-' + i + '">',
-          '<img src="' + (p.image || '') + '" alt="' + p.name + '" loading="lazy"',
-               ' onerror="this.style.background=\'#1e1e2e\';this.alt=\'Image unavailable\'">',
-          '<div class="card-body">',
-            '<div class="card-name">' + p.name + '</div>',
-            '<div class="card-price">' + formatPrice(p.price) + '</div>',
-            '<div class="card-tags">' + tags + '</div>',
-            '<div class="card-score">🎉 ' + occasions + ' · ⭐ ' + (p.score || 0) + '/100</div>',
-            '<button class="btn-select" id="btn-' + i + '"',
-                    ' onclick="selectProduct(' + i + ')">',
-              'Select this piece',
-            '</button>',
-          '</div>',
-        '</div>',
-      ].join('');
-    });
-    html += '</div>';
-    root.innerHTML = html;
-  }
-
-  var selectedIndex = null;
-  var allProducts = [];
-
-  window.selectProduct = function(i) {
-    var p = allProducts[i];
-    if (!p) return;
-
-    // Update button states
-    allProducts.forEach(function(_, j) {
-      var btn = document.getElementById('btn-' + j);
-      if (btn) {
-        btn.textContent = j === i ? '✓ Selected!' : 'Select this piece';
-        btn.className = j === i ? 'btn-select selected' : 'btn-select';
+  // Listen to messages from standard MCP Apps / ChatGPT window.parent
+  window.addEventListener('message', function(event) {
+    if (event.source === window.parent) {
+      // Forward data to the nested Next.js React widget
+      iframe.contentWindow.postMessage(event.data, '*');
+    } else if (event.source === iframe.contentWindow) {
+      // Forward actions from Next.js React widget back to ChatGPT
+      window.parent.postMessage(event.data, '*');
+      
+      // Also bridge tool output select actions using window.openai
+      if (event.data && event.data.type === 'tool_call') {
+        if (window.openai && window.openai.sendMessage) {
+          window.openai.sendMessage(event.data);
+        }
       }
-    });
-    selectedIndex = i;
-
-    // Notify host via window.openai bridge if available
-    if (window.openai && window.openai.sendMessage) {
-      window.openai.sendMessage({
-        type: 'tool_call',
-        toolName: 'jewellery_selected',
-        params: { productName: p.name, productPrice: p.price }
-      });
     }
-    // Also post a message for any listening host
-    window.parent.postMessage({
-      type: 'mcp_widget_action',
-      action: 'select_jewellery',
-      product: p
-    }, '*');
-  };
+  });
 
-  // Read data from OpenAI Apps SDK bridge
-  function init() {
-    var data = null;
+  // Listen to the legacy openai:set_globals event and forward it
+  window.addEventListener('openai:set_globals', function(event) {
+    const globals = event.detail && event.detail.globals;
+    if (globals && globals.toolOutput) {
+      iframe.contentWindow.postMessage({
+        type: 'openai_globals',
+        toolOutput: globals.toolOutput
+      }, '*');
+    }
+  });
 
-    // Method 1: OpenAI Apps SDK standard
+  // When iframe tells us it's ready, send it initial data if available
+  iframe.onload = function() {
     if (window.openai && window.openai.toolOutput) {
-      data = window.openai.toolOutput.structuredContent;
+      iframe.contentWindow.postMessage({
+        type: 'openai_globals',
+        toolOutput: window.openai.toolOutput,
+        toolInput: window.openai.toolInput
+      }, '*');
     }
-
-    // Method 2: Check parent postMessage injection
-    // (fallback if the SDK bridge isn't initialized yet)
-    if (!data) {
-      window.addEventListener('message', function(event) {
-        if (event.data && event.data.structuredContent) {
-          allProducts = event.data.structuredContent.products || [];
-          renderCards(allProducts);
-        }
-      });
-    }
-
-    if (data && data.products) {
-      allProducts = data.products;
-      renderCards(allProducts);
-    } else if (!data) {
-      // Retry after SDK initializes
-      setTimeout(function() {
-        if (window.openai && window.openai.toolOutput) {
-          var d = window.openai.toolOutput.structuredContent;
-          if (d && d.products) {
-            allProducts = d.products;
-            renderCards(allProducts);
-            return;
-          }
-        }
-        root.innerHTML = '<div class="error">Could not load data. Make sure ChatGPT Developer Mode is enabled.</div>';
-      }, 1500);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  };
 })();
 </script>
 </body>

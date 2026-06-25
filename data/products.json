@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Royal Temple Bridal Choker Set",
     "price": 85000,
-    "image": "https://chatgpt-jewellery.vercel.app/one.png",
+    "image": "/one.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["bridal", "royal", "traditional", "temple"],
@@ -18,7 +18,7 @@
     "id": "2",
     "name": "Diamond Emerald Pendant Set",
     "price": 65000,
-    "image": "https://chatgpt-jewellery.vercel.app/two.png",
+    "image": "/two.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["elegant", "modern", "diamond"],
@@ -33,7 +33,7 @@
     "id": "3",
     "name": "Antique Lakshmi Bridal Choker",
     "price": 95000,
-    "image": "https://chatgpt-jewellery.vercel.app/three.png",
+    "image": "/three.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["bridal", "royal", "temple", "antique"],
@@ -48,7 +48,7 @@
     "id": "4",
     "name": "Rose Gold Diamond Reception Set",
     "price": 70000,
-    "image": "https://chatgpt-jewellery.vercel.app/four.png",
+    "image": "/four.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury","diamond","modern","elegant"],
@@ -63,7 +63,7 @@
     "id": "5",
     "name": "Diamond Reception Necklace Set",
     "price": 120000,
-    "image": "https://chatgpt-jewellery.vercel.app/five.png",
+    "image": "/five.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury", "diamond", "royal"],
@@ -78,7 +78,7 @@
     "id": "6",
     "name": "Emerald Diamond Luxury Set",
     "price": 135000,
-    "image": "https://chatgpt-jewellery.vercel.app/six.png",
+    "image": "/six.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury", "diamond", "modern"],

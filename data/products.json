@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Royal Temple Bridal Choker Set",
     "price": 85000,
-    "image": "/one.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217413/three_gcdcw2.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["bridal", "royal", "traditional", "temple"],
@@ -18,7 +18,7 @@
     "id": "2",
     "name": "Diamond Emerald Pendant Set",
     "price": 65000,
-    "image": "/two.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/one_p3xu4m.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["elegant", "modern", "diamond"],
@@ -33,7 +33,7 @@
     "id": "3",
     "name": "Antique Lakshmi Bridal Choker",
     "price": 95000,
-    "image": "/three.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/two_r4d4lf.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["bridal", "royal", "temple", "antique"],
@@ -48,7 +48,7 @@
     "id": "4",
     "name": "Rose Gold Diamond Reception Set",
     "price": 70000,
-    "image": "/four.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/six_hwcfz0.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury","diamond","modern","elegant"],
@@ -63,7 +63,7 @@
     "id": "5",
     "name": "Diamond Reception Necklace Set",
     "price": 120000,
-    "image": "/five.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217291/four_x47ahs.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury", "diamond", "royal"],
@@ -78,7 +78,7 @@
     "id": "6",
     "name": "Emerald Diamond Luxury Set",
     "price": 135000,
-    "image": "/six.png",
+    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217291/five_pio50b.png",
     "aiTags": {
       "category": "necklace_set",
       "styleTags": ["luxury", "diamond", "modern"],

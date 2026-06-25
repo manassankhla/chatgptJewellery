@@ -92,279 +92,193 @@ function getWidgetHtml(origin: string) {
     color: #18181b;
     padding: 16px;
   }
-  
-  /* Dark mode support */
   @media (prefers-color-scheme: dark) {
-    body {
-      background: #18181b;
-      color: #f4f4f5;
-    }
+    body { background: #18181b; color: #f4f4f5; }
   }
-
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
-  
   .title {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #d97706; /* Gold/Amber */
+    color: #d97706;
     display: flex;
     align-items: center;
     gap: 6px;
   }
-
-  .grid {
-    display: grid;
-    grid-template-cols: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
+  .error {
+    text-align: center;
+    color: #71717a;
+    padding: 32px;
+    font-size: 13px;
   }
 
-  @media (max-width: 768px) {
-    .grid {
-      grid-template-cols: 1fr;
-      gap: 16px;
-    }
-  }
-
-  .card {
-    background: #ffffff;
-    border: 1px solid #f4f4f5;
+  /* ── TABLE ────────────────────────────────────────────────────────────── */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
     border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-    position: relative;
+    border: 1px solid #f0ece8;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
   }
-
   @media (prefers-color-scheme: dark) {
-    .card {
-      background: #242427;
-      border-color: #27272a;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
+    .table-wrapper { border-color: #2d2d30; box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
   }
-
-  .img-container {
-    position: relative;
-    aspect-ratio: 1.1;
+  table {
     width: 100%;
-    background: #f4f4f5;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .img-container {
-      background: #09090b;
-    }
-  }
-
-  .img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .badge-number {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 28px;
-    height: 28px;
+    border-collapse: collapse;
     background: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: #18181b;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 13px;
   }
-
   @media (prefers-color-scheme: dark) {
-    .badge-number {
-      background: #2d2d30;
-      color: #f4f4f5;
-    }
+    table { background: #1c1c1f; }
   }
-
-  .badge-recommended {
-    position: absolute;
-    top: 12px;
-    left: 48px;
-    background: #803340;
+  thead tr {
+    background: linear-gradient(135deg, #803340 0%, #a0455a 100%);
+  }
+  thead th {
     color: #ffffff;
     font-size: 10px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 99px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
   }
-
-  .badge-favorite {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 28px;
-    height: 28px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(4px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    cursor: pointer;
-    transition: background-color 0.2s;
+  tbody tr {
+    border-bottom: 1px solid #f4f4f5;
+    transition: background 0.15s;
   }
-
-  .badge-favorite:hover {
-    background: #ffffff;
-  }
-
   @media (prefers-color-scheme: dark) {
-    .badge-favorite {
-      background: rgba(45,45,48,0.9);
-      color: #f4f4f5;
-    }
-    .badge-favorite:hover {
-      background: #3f3f46;
-    }
+    tbody tr { border-bottom-color: #27272a; }
   }
-
-  .badge-favorite svg {
-    width: 14px;
-    height: 14px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fdf8f6; }
+  @media (prefers-color-scheme: dark) {
+    tbody tr:hover { background: #242427; }
   }
-
-  .card-body {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    gap: 16px;
+  tbody td {
+    padding: 14px 16px;
+    vertical-align: middle;
   }
-
-  .card-name {
-    font-size: 14px;
+  .td-img { width: 80px; min-width: 80px; }
+  .td-img img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #f0ece8;
+    display: block;
+  }
+  @media (prefers-color-scheme: dark) {
+    .td-img img { border-color: #2d2d30; }
+  }
+  .td-name { min-width: 160px; }
+  .row-name {
+    font-size: 13px;
     font-weight: 700;
     color: #18181b;
     line-height: 1.3;
+    margin-bottom: 4px;
   }
-
   @media (prefers-color-scheme: dark) {
-    .card-name {
-      color: #f4f4f5;
-    }
+    .row-name { color: #f4f4f5; }
   }
-
-  .bullet-list {
-    list-style: none;
+  .row-tags {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
   }
-
-  .bullet-item {
-    font-size: 11px;
-    color: #52525b;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
+  .tag {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 99px;
+    background: #f5ede6;
+    color: #803340;
+    text-transform: capitalize;
+    white-space: nowrap;
   }
-
   @media (prefers-color-scheme: dark) {
-    .bullet-item {
-      color: #a1a1aa;
-    }
+    .tag { background: #2d1c1f; color: #e07080; }
   }
-
-  .bullet-icon {
-    color: #d97706;
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-
-  .card-price {
+  .tag.intensity-heavy { background: #803340; color: #fff; }
+  .tag.intensity-medium { background: #d97706; color: #fff; }
+  .td-price {
+    white-space: nowrap;
     font-size: 14px;
     font-weight: 800;
     color: #18181b;
   }
-
   @media (prefers-color-scheme: dark) {
-    .card-price {
-      color: #ffffff;
-    }
+    .td-price { color: #f4f4f5; }
   }
-
-  .btn-try-on {
-    width: 100%;
-    padding: 10px;
-    border-radius: 12px;
-    border: none;
-    font-family: inherit;
+  .td-score { text-align: center; min-width: 60px; }
+  .score-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
     font-size: 12px;
-    font-weight: 700;
-    display: flex;
+    font-weight: 800;
+    background: linear-gradient(135deg, #803340 0%, #a0455a 100%);
+    color: #ffffff;
+  }
+  .td-action { min-width: 110px; white-space: nowrap; }
+  .btn-buy-now {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
     transition: all 0.2s;
-  }
-
-  .btn-try-on.standard {
-    background: #f5ede6;
-    color: #18181b;
-  }
-
-  .btn-try-on.standard:hover {
-    background: #eae0d5;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .btn-try-on.standard {
-      background: #27272a;
-      color: #f4f4f5;
-    }
-    .btn-try-on.standard:hover {
-      background: #3f3f46;
-    }
-  }
-
-  .btn-try-on.recommended {
-    background: #803340;
+    background: linear-gradient(135deg, #803340 0%, #a0455a 100%);
     color: #ffffff;
+    box-shadow: 0 4px 12px rgba(128,51,64,0.3);
   }
-
-  .btn-try-on.recommended:hover {
-    background: #6c2834;
+  .btn-buy-now:hover {
+    background: linear-gradient(135deg, #6c2834 0%, #8c3a4d 100%);
+    box-shadow: 0 6px 16px rgba(128,51,64,0.45);
+    transform: translateY(-1px);
   }
-
-  .btn-try-on svg {
-    width: 16px;
-    height: 16px;
+  .btn-buy-now svg {
+    width: 13px;
+    height: 13px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 2.5;
   }
-
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: #803340;
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  /* ── RECOMMENDATION BOX ───────────────────────────────────────────────── */
   .recommend-box {
-    margin-top: 20px;
     padding: 16px;
     background: #fbf5f5;
     border: 1px solid #f3e6e6;
@@ -373,14 +287,9 @@ function getWidgetHtml(origin: string) {
     align-items: flex-start;
     gap: 12px;
   }
-
   @media (prefers-color-scheme: dark) {
-    .recommend-box {
-      background: #24191b;
-      border-color: #3b2024;
-    }
+    .recommend-box { background: #24191b; border-color: #3b2024; }
   }
-
   .recommend-icon {
     background: rgba(128, 51, 64, 0.1);
     color: #803340;
@@ -391,7 +300,6 @@ function getWidgetHtml(origin: string) {
     justify-content: center;
     flex-shrink: 0;
   }
-
   .recommend-icon svg {
     width: 16px;
     height: 16px;
@@ -399,43 +307,24 @@ function getWidgetHtml(origin: string) {
     stroke: currentColor;
     stroke-width: 2;
   }
-
   .recommend-text h5 {
     font-size: 12px;
     font-weight: 800;
     color: #18181b;
     margin-bottom: 2px;
   }
-
   @media (prefers-color-scheme: dark) {
-    .recommend-text h5 {
-      color: #f4f4f5;
-    }
+    .recommend-text h5 { color: #f4f4f5; }
   }
-
   .recommend-text p {
     font-size: 11px;
     color: #52525b;
     line-height: 1.4;
   }
-
   @media (prefers-color-scheme: dark) {
-    .recommend-text p {
-      color: #a1a1aa;
-    }
+    .recommend-text p { color: #a1a1aa; }
   }
-
-  .highlight-option {
-    font-weight: 750;
-    color: #803340;
-  }
-
-  .error {
-    text-align: center;
-    color: #71717a;
-    padding: 32px;
-    font-size: 13px;
-  }
+  .highlight-option { font-weight: 750; color: #803340; }
 </style>
 </head>
 <body>
@@ -448,43 +337,6 @@ function getWidgetHtml(origin: string) {
 (function() {
   var root = document.getElementById('root');
 
-  function getBulletPoints(p, color, type) {
-    var points = [];
-    var c = color || "burgundy";
-    var t = type || "gown";
-
-    if (p.name.indexOf("Emerald") !== -1) {
-      points.push("Elegant diamond & emerald design");
-      points.push("Perfect for a sophisticated look");
-      points.push("Medium statement");
-    } else if (p.name.indexOf("Rose Gold") !== -1 || p.id === "4") {
-      points.push("Luxurious rose gold & diamond finish");
-      points.push("Complements " + c + " perfectly");
-      points.push("Glamorous & high-end look");
-    } else if (p.name.indexOf("Temple") !== -1 || p.id === "1") {
-      points.push("Traditional royal bridal style");
-      points.push("Best for lehengas & sarees");
-      points.push("Bold fusion look with " + t);
-    } else {
-      points.push("Premium handcrafted designer piece");
-      points.push("Styled to match your " + t);
-      points.push((p.lookIntensity === "heavy" ? "Bold" : "Elegant") + " statement look");
-    }
-    return points;
-  }
-
-  window.tryOnProduct = function(index, id, name, image) {
-    window.parent.postMessage({
-      type: 'tool_call',
-      toolName: 'virtual_try_on',
-      params: {
-        jewelleryName: name,
-        jewelleryImageUrl: image,
-        userPhotoUrl: ""
-      }
-    }, '*');
-  };
-
   function render(data) {
     if (!data || !data.products || data.products.length === 0) {
       root.innerHTML = '<div class="error">No products available.</div>';
@@ -492,54 +344,75 @@ function getWidgetHtml(origin: string) {
     }
 
     var products = data.products;
-    var color = data.outfitColor || "burgundy";
-    var type = data.outfitType || "gown";
+    var color = data.outfitColor || "your outfit";
+    var type = data.outfitType || "your look";
 
+    // Pick best match by score
     var recIdx = 0;
+    var bestScore = -1;
     for (var i = 0; i < products.length; i++) {
-      if (products[i].name.indexOf("Rose Gold") !== -1) {
+      if ((products[i].score || 0) > bestScore) {
+        bestScore = products[i].score || 0;
         recIdx = i;
-        break;
       }
     }
 
-    var html = '<div class="grid">';
+    var html = [
+      '<div class="table-wrapper">',
+        '<table>',
+          '<thead><tr>',
+            '<th></th>',
+            '<th>Product</th>',
+            '<th>Occasions</th>',
+            '<th>Price</th>',
+            '<th style="text-align:center">Match</th>',
+            '<th></th>',
+          '</tr></thead>',
+          '<tbody>',
+    ].join('');
+
     products.forEach(function(p, idx) {
       var isRec = idx === recIdx;
-      var points = getBulletPoints(p, color, type);
-      var pointsHtml = points.map(function(pt) {
-        return '<li class="bullet-item"><span class="bullet-icon">✦</span><span>' + pt + '</span></li>';
-      }).join('');
+      var intensity = p.lookIntensity || 'medium';
+      var tags = (p.styleTags || []).slice(0, 3);
+      var occasions = (p.occasionTags || []).slice(0, 2);
+      var link = p.link || '#';
 
       html += [
-        '<div class="card">',
-          '<div class="img-container">',
+        '<tr>',
+          '<td class="td-img">',
             '<img src="' + p.image + '" alt="' + p.name + '">',
-            '<div class="badge-number">' + (idx + 1) + '</div>',
-            isRec ? '<div class="badge-recommended"><span>★</span> Recommended</div>' : '',
-            '<div class="badge-favorite">',
-              '<svg viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
+          '</td>',
+          '<td class="td-name">',
+            isRec ? '<div class="rec-badge">★ Best Match</div>' : '',
+            '<div class="row-name">' + p.name + '</div>',
+            '<div class="row-tags">',
+              tags.map(function(t) { return '<span class="tag">' + t + '</span>'; }).join(''),
+              '<span class="tag intensity-' + intensity + '">' + intensity + '</span>',
             '</div>',
-          '</div>',
-          '<div class="card-body">',
-            '<div style="display:flex; flex-direction:column; gap:12px;">',
-              '<h4 class="card-name">' + p.name + '</h4>',
-              '<ul class="bullet-list">' + pointsHtml + '</ul>',
-              '<div class="card-price">₹' + p.price.toLocaleString("en-IN") + '</div>',
+          '</td>',
+          '<td>',
+            '<div style="font-size:11px;color:#71717a;line-height:1.6;">',
+              occasions.join('<br>'),
             '</div>',
-            '<button class="btn-try-on ' + (isRec ? 'recommended' : 'standard') + '" onclick="tryOnProduct(' + idx + ', \'' + p.id + '\', \'' + p.name + '\', \'' + p.image + '\')">',
-              '<svg viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-              'Try On',
-            '</button>',
-          '</div>',
-        '</div>'
+          '</td>',
+          '<td class="td-price">₹' + (p.price || 0).toLocaleString('en-IN') + '</td>',
+          '<td class="td-score"><div class="score-pill">' + (p.score || '-') + '</div></td>',
+          '<td class="td-action">',
+            '<a class="btn-buy-now" href="' + link + '" target="_blank" rel="noopener noreferrer">',
+              '<svg viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+              'Buy Now',
+            '</a>',
+          '</td>',
+        '</tr>',
       ].join('');
     });
-    html += '</div>';
 
-    // Recommendation bottom box
-    if (products[recIdx]) {
-      var recP = products[recIdx];
+    html += '</tbody></table></div>';
+
+    // Bottom recommendation box
+    var recP = products[recIdx];
+    if (recP) {
       html += [
         '<div class="recommend-box">',
           '<div class="recommend-icon">',
@@ -547,9 +420,9 @@ function getWidgetHtml(origin: string) {
           '</div>',
           '<div class="recommend-text">',
             '<h5>My Recommendation:</h5>',
-            '<p><span class="highlight-option">Option ' + (recIdx + 1) + ' – ' + recP.name + '</span>. The rose gold and diamonds beautifully complement ' + color + ' and give a luxurious wedding look.</p>',
+            '<p><span class="highlight-option">' + recP.name + '</span> — Best match for ' + color + ' ' + type + ' with a score of ' + (recP.score || '') + '/100. Click <strong>Buy Now</strong> to view &amp; purchase!</p>',
           '</div>',
-        '</div>'
+        '</div>',
       ].join('');
     }
 
@@ -560,18 +433,15 @@ function getWidgetHtml(origin: string) {
     if (window.openai && window.openai.toolOutput) {
       render(window.openai.toolOutput.structuredContent);
     }
-
     window.addEventListener('message', function(event) {
       var message = event.data;
       if (!message) return;
-
       if (message.jsonrpc === "2.0" && message.method === "ui/notifications/tool-result") {
         render(message.params.structuredContent);
       } else if (message.structuredContent) {
         render(message.structuredContent);
       }
     });
-
     window.addEventListener('openai:set_globals', function(event) {
       var globals = event.detail && event.detail.globals;
       if (globals && globals.toolOutput) {
@@ -705,6 +575,7 @@ function buildServer(origin: string): McpServer {
           name: p.name,
           price: p.price,
           image: p.image,
+          link: p.link,
           styleTags: p.aiTags.styleTags,
           occasionTags: p.aiTags.occasionTags,
           bestOutfitColours: p.aiTags.bestOutfitColours,

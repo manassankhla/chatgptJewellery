@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Royal Temple Bridal Choker Set",
     "price": 85000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217413/three_gcdcw2.png",
+    "image": "/three.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/royal-temple-bridal-choker-set",
     "aiTags": {
       "category": "necklace_set",
@@ -19,7 +19,7 @@
     "id": "2",
     "name": "Diamond Emerald Pendant Set",
     "price": 65000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/one_p3xu4m.png",
+    "image": "/one.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/diamond-emerald-pendant-set",
     "aiTags": {
       "category": "necklace_set",
@@ -35,7 +35,7 @@
     "id": "3",
     "name": "Antique Lakshmi Bridal Choker",
     "price": 95000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/two_r4d4lf.png",
+    "image": "/two.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/antique-lakshmi-bridal-choker",
     "aiTags": {
       "category": "necklace_set",
@@ -51,7 +51,7 @@
     "id": "4",
     "name": "Rose Gold Diamond Reception Set",
     "price": 70000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217412/six_hwcfz0.png",
+    "image": "/six.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/rose-gold-diamond-reception-set",
     "aiTags": {
       "category": "necklace_set",
@@ -67,7 +67,7 @@
     "id": "5",
     "name": "Diamond Reception Necklace Set",
     "price": 120000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217291/four_x47ahs.png",
+    "image": "/four.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/diamond-reception-necklace-set",
     "aiTags": {
       "category": "necklace_set",
@@ -83,7 +83,7 @@
     "id": "6",
     "name": "Emerald Diamond Luxury Set",
     "price": 135000,
-    "image": "https://res.cloudinary.com/dnjouplkz/image/upload/v1782217291/five_pio50b.png",
+    "image": "/five.png",
     "link": "https://chatgpt-jewellery.vercel.app/products/emerald-diamond-luxury-set",
     "aiTags": {
       "category": "necklace_set",

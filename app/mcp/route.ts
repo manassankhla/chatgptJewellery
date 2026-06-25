@@ -102,22 +102,11 @@ function getCachedWidget(): WidgetData | null {
 // Pre-embeds product data as window.__INIT_DATA__ so the widget renders
 // immediately — no dependency on window.openai injection.
 function getWidgetHtml(origin: string, initData?: WidgetData | null) {
-  // Rewrite Cloudinary image URLs → same-origin proxy so the sandboxed
-  // ChatGPT iframe (which blocks external img-src) can display them.
-  const proxyData: WidgetData | null = initData
-    ? {
-        ...initData,
-        products: initData.products.map((p) => ({
-          ...p,
-          image: p.image
-            ? `${origin}/api/img?src=${encodeURIComponent(p.image)}`
-            : p.image,
-        })),
-      }
-    : null;
-
-  const initScript = proxyData
-    ? `window.__INIT_DATA__ = ${JSON.stringify(proxyData)};`
+  // Images in initData are already absolute same-origin URLs
+  // (local /public/*.png resolved by getLocalImageUrl → https://our-domain/*.png)
+  // so no proxy rewriting needed — they load fine in the sandboxed iframe.
+  const initScript = initData
+    ? `window.__INIT_DATA__ = ${JSON.stringify(initData)};`
     : `window.__INIT_DATA__ = null;`;
   return `<!DOCTYPE html>
 <html lang="en">

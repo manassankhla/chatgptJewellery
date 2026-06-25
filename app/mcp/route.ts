@@ -82,59 +82,509 @@ function getWidgetHtml(origin: string) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jewellery Recommendations Bridge</title>
+<title>Jewellery Recommendations</title>
 <style>
-  body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
-  iframe { border: none; width: 100%; height: 100%; }
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #fcfcfc;
+    color: #18181b;
+    padding: 16px;
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #18181b;
+      color: #f4f4f5;
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  
+  .title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #d97706; /* Gold/Amber */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-cols: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-cols: 1fr;
+      gap: 16px;
+    }
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid #f4f4f5;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    position: relative;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .card {
+      background: #242427;
+      border-color: #27272a;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+  }
+
+  .img-container {
+    position: relative;
+    aspect-ratio: 1.1;
+    width: 100%;
+    background: #f4f4f5;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .img-container {
+      background: #09090b;
+    }
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .badge-number {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 28px;
+    height: 28px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #18181b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .badge-number {
+      background: #2d2d30;
+      color: #f4f4f5;
+    }
+  }
+
+  .badge-recommended {
+    position: absolute;
+    top: 12px;
+    left: 48px;
+    background: #803340;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 99px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .badge-favorite {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .badge-favorite:hover {
+    background: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .badge-favorite {
+      background: rgba(45,45,48,0.9);
+      color: #f4f4f5;
+    }
+    .badge-favorite:hover {
+      background: #3f3f46;
+    }
+  }
+
+  .badge-favorite svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #18181b;
+    line-height: 1.3;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .card-name {
+      color: #f4f4f5;
+    }
+  }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bullet-item {
+    font-size: 11px;
+    color: #52525b;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .bullet-item {
+      color: #a1a1aa;
+    }
+  }
+
+  .bullet-icon {
+    color: #d97706;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .card-price {
+    font-size: 14px;
+    font-weight: 800;
+    color: #18181b;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .card-price {
+      color: #ffffff;
+    }
+  }
+
+  .btn-try-on {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-try-on.standard {
+    background: #f5ede6;
+    color: #18181b;
+  }
+
+  .btn-try-on.standard:hover {
+    background: #eae0d5;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-try-on.standard {
+      background: #27272a;
+      color: #f4f4f5;
+    }
+    .btn-try-on.standard:hover {
+      background: #3f3f46;
+    }
+  }
+
+  .btn-try-on.recommended {
+    background: #803340;
+    color: #ffffff;
+  }
+
+  .btn-try-on.recommended:hover {
+    background: #6c2834;
+  }
+
+  .btn-try-on svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .recommend-box {
+    margin-top: 20px;
+    padding: 16px;
+    background: #fbf5f5;
+    border: 1px solid #f3e6e6;
+    border-radius: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .recommend-box {
+      background: #24191b;
+      border-color: #3b2024;
+    }
+  }
+
+  .recommend-icon {
+    background: rgba(128, 51, 64, 0.1);
+    color: #803340;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .recommend-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .recommend-text h5 {
+    font-size: 12px;
+    font-weight: 800;
+    color: #18181b;
+    margin-bottom: 2px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .recommend-text h5 {
+      color: #f4f4f5;
+    }
+  }
+
+  .recommend-text p {
+    font-size: 11px;
+    color: #52525b;
+    line-height: 1.4;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .recommend-text p {
+      color: #a1a1aa;
+    }
+  }
+
+  .highlight-option {
+    font-weight: 750;
+    color: #803340;
+  }
+
+  .error {
+    text-align: center;
+    color: #71717a;
+    padding: 32px;
+    font-size: 13px;
+  }
 </style>
 </head>
 <body>
-<iframe id="widget-frame" src=""></iframe>
+<div class="header">
+  <h3 class="title">✨ Curated Recommendations</h3>
+</div>
+<div id="root"><div class="error">Loading suggestions...</div></div>
+
 <script>
 (function() {
-  const iframe = document.getElementById('widget-frame');
-  const origin = "${origin}";
-  iframe.src = origin + '/widget/cards';
+  var root = document.getElementById('root');
 
-  // Listen to messages from standard MCP Apps / ChatGPT window.parent
-  window.addEventListener('message', function(event) {
-    if (event.source === window.parent) {
-      // Forward data to the nested Next.js React widget
-      iframe.contentWindow.postMessage(event.data, '*');
-    } else if (event.source === iframe.contentWindow) {
-      // Forward actions from Next.js React widget back to ChatGPT
-      window.parent.postMessage(event.data, '*');
-      
-      // Also bridge tool output select actions using window.openai
-      if (event.data && event.data.type === 'tool_call') {
-        if (window.openai && window.openai.sendMessage) {
-          window.openai.sendMessage(event.data);
-        }
+  function getBulletPoints(p, color, type) {
+    var points = [];
+    var c = color || "burgundy";
+    var t = type || "gown";
+
+    if (p.name.indexOf("Emerald") !== -1) {
+      points.push("Elegant diamond & emerald design");
+      points.push("Perfect for a sophisticated look");
+      points.push("Medium statement");
+    } else if (p.name.indexOf("Rose Gold") !== -1 || p.id === "4") {
+      points.push("Luxurious rose gold & diamond finish");
+      points.push("Complements " + c + " perfectly");
+      points.push("Glamorous & high-end look");
+    } else if (p.name.indexOf("Temple") !== -1 || p.id === "1") {
+      points.push("Traditional royal bridal style");
+      points.push("Best for lehengas & sarees");
+      points.push("Bold fusion look with " + t);
+    } else {
+      points.push("Premium handcrafted designer piece");
+      points.push("Styled to match your " + t);
+      points.push((p.lookIntensity === "heavy" ? "Bold" : "Elegant") + " statement look");
+    }
+    return points;
+  }
+
+  window.tryOnProduct = function(index, id, name, image) {
+    window.parent.postMessage({
+      type: 'tool_call',
+      toolName: 'virtual_try_on',
+      params: {
+        jewelleryName: name,
+        jewelleryImageUrl: image,
+        userPhotoUrl: ""
+      }
+    }, '*');
+  };
+
+  function render(data) {
+    if (!data || !data.products || data.products.length === 0) {
+      root.innerHTML = '<div class="error">No products available.</div>';
+      return;
+    }
+
+    var products = data.products;
+    var color = data.outfitColor || "burgundy";
+    var type = data.outfitType || "gown";
+
+    var recIdx = 0;
+    for (var i = 0; i < products.length; i++) {
+      if (products[i].name.indexOf("Rose Gold") !== -1) {
+        recIdx = i;
+        break;
       }
     }
-  });
 
-  // Listen to the legacy openai:set_globals event and forward it
-  window.addEventListener('openai:set_globals', function(event) {
-    const globals = event.detail && event.detail.globals;
-    if (globals && globals.toolOutput) {
-      iframe.contentWindow.postMessage({
-        type: 'openai_globals',
-        toolOutput: globals.toolOutput
-      }, '*');
+    var html = '<div class="grid">';
+    products.forEach(function(p, idx) {
+      var isRec = idx === recIdx;
+      var points = getBulletPoints(p, color, type);
+      var pointsHtml = points.map(function(pt) {
+        return '<li class="bullet-item"><span class="bullet-icon">✦</span><span>' + pt + '</span></li>';
+      }).join('');
+
+      html += [
+        '<div class="card">',
+          '<div class="img-container">',
+            '<img src="' + p.image + '" alt="' + p.name + '">',
+            '<div class="badge-number">' + (idx + 1) + '</div>',
+            isRec ? '<div class="badge-recommended"><span>★</span> Recommended</div>' : '',
+            '<div class="badge-favorite">',
+              '<svg viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
+            '</div>',
+          '</div>',
+          '<div class="card-body">',
+            '<div style="display:flex; flex-direction:column; gap:12px;">',
+              '<h4 class="card-name">' + p.name + '</h4>',
+              '<ul class="bullet-list">' + pointsHtml + '</ul>',
+              '<div class="card-price">₹' + p.price.toLocaleString("en-IN") + '</div>',
+            '</div>',
+            '<button class="btn-try-on ' + (isRec ? 'recommended' : 'standard') + '" onclick="tryOnProduct(' + idx + ', \'' + p.id + '\', \'' + p.name + '\', \'' + p.image + '\')">',
+              '<svg viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+              'Try On',
+            '</button>',
+          '</div>',
+        '</div>'
+      ].join('');
+    });
+    html += '</div>';
+
+    // Recommendation bottom box
+    if (products[recIdx]) {
+      var recP = products[recIdx];
+      html += [
+        '<div class="recommend-box">',
+          '<div class="recommend-icon">',
+            '<svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
+          '</div>',
+          '<div class="recommend-text">',
+            '<h5>My Recommendation:</h5>',
+            '<p><span class="highlight-option">Option ' + (recIdx + 1) + ' – ' + recP.name + '</span>. The rose gold and diamonds beautifully complement ' + color + ' and give a luxurious wedding look.</p>',
+          '</div>',
+        '</div>'
+      ].join('');
     }
-  });
 
-  // When iframe tells us it's ready, send it initial data if available
-  iframe.onload = function() {
+    root.innerHTML = html;
+  }
+
+  function init() {
     if (window.openai && window.openai.toolOutput) {
-      iframe.contentWindow.postMessage({
-        type: 'openai_globals',
-        toolOutput: window.openai.toolOutput,
-        toolInput: window.openai.toolInput
-      }, '*');
+      render(window.openai.toolOutput.structuredContent);
     }
-  };
+
+    window.addEventListener('message', function(event) {
+      var message = event.data;
+      if (!message) return;
+
+      if (message.jsonrpc === "2.0" && message.method === "ui/notifications/tool-result") {
+        render(message.params.structuredContent);
+      } else if (message.structuredContent) {
+        render(message.structuredContent);
+      }
+    });
+
+    window.addEventListener('openai:set_globals', function(event) {
+      var globals = event.detail && event.detail.globals;
+      if (globals && globals.toolOutput) {
+        render(globals.toolOutput.structuredContent);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 </body>

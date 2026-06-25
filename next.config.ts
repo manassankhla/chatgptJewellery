@@ -16,24 +16,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      {
-        source: "/(.*).png",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
-          },
-        ],
-      },
-      {
-        source: "/(.*).jpg",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
-          },
-        ],
-      },
     ];
   },
 };

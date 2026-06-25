@@ -561,21 +561,6 @@ function getLocalImageUrl(imagePath: string, origin: string): string {
   return `${origin}${imagePath}`;
 }
 
-async function getBase64ImageUrl(imagePath: string, origin: string): Promise<string> {
-  try {
-    const url = imagePath.startsWith("http") ? imagePath : `${origin}${imagePath}`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const mimeType = response.headers.get("content-type") || "image/png";
-    return `data:${mimeType};base64,${buffer.toString("base64")}`;
-  } catch (e) {
-    console.error("[IMAGE FETCH ERROR]", e);
-    return getLocalImageUrl(imagePath, origin); // fallback
-  }
-}
-
 // ── MCP Server ────────────────────────────────────────────────────────────
 function buildServer(origin: string): McpServer {
   const server = new McpServer({
@@ -584,14 +569,14 @@ function buildServer(origin: string): McpServer {
   });
 
   // ══════════════════════════════════════════════════════════════════════════
-  // RESOURCE — ui://widget/jewellery-cards.html
+  // RESOURCE — ui://widget/jewellery-cards-v3.html
   // ChatGPT fetches this when _meta.ui.resourceUri is set in the tool result.
   // MIME type must be text/html;profile=mcp-app for ChatGPT to render it.
   // Requires: ChatGPT Developer Mode (Settings → Apps & Connectors → Advanced)
   // ══════════════════════════════════════════════════════════════════════════
   server.registerResource(
     "jewellery-cards-widget",
-    "ui://widget/jewellery-cards.html",
+    "ui://widget/jewellery-cards-v3.html",
     {
       // ResourceMetadata = Omit<Resource, 'uri' | 'name'> — name is excluded
       description: "Interactive jewellery recommendation cards widget with product images",
@@ -604,7 +589,7 @@ function buildServer(origin: string): McpServer {
       return {
         contents: [
           {
-            uri: "ui://widget/jewellery-cards.html",
+            uri: "ui://widget/jewellery-cards-v3.html",
             mimeType: "text/html;profile=mcp-app",
             text: getWidgetHtml(origin, initData),
           },
@@ -646,7 +631,7 @@ function buildServer(origin: string): McpServer {
       },
       _meta: {
         ui: {
-          resourceUri: "ui://widget/jewellery-cards.html",
+          resourceUri: "ui://widget/jewellery-cards-v3.html",
         },
         "openai/outputTemplate": `${origin}/widget/cards`,
       },
@@ -718,7 +703,7 @@ function buildServer(origin: string): McpServer {
         structuredContent,
         _meta: {
           ui: {
-            resourceUri: "ui://widget/jewellery-cards.html",
+            resourceUri: "ui://widget/jewellery-cards-v3.html",
           },
           "openai/outputTemplate": `${origin}/widget/cards`,
         },
